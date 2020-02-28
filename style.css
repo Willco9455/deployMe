@@ -1,0 +1,9 @@
+body {
+	background-image: url("https://cdn1.vectorstock.com/i/1000x1000/03/65/biology-background-image-vector-10050365.jpg");
+}
+
+#joe{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
