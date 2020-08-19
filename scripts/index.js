@@ -1,0 +1,1 @@
+document.getElementById("topTabs").style.paddingLeft = (window.outerWidth-1000)/2 + "px";
