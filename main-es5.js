@@ -288,9 +288,19 @@
 
           this.timeService = timeService;
           this.storageService = storageService; // LOCAL STORAGE
-          // actions: Action [] = [];
 
-          this.actions = [new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('today2', '2020-08-19', 'Free', false, 2), new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('today1', '2020-08-19', 'Free', true, 0), new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('another year', '2021-07-20', 'Work', false, 0), new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('week2', '2020-08-20', 'Family', true, 0), new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('week1', '2020-08-22', 'Family', false, 2), new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('another year', '2021-07-20', 'Work', false, 1), new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('today3', '2020-08-19', 'Free', false, 1), new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('week3', '2020-08-23', 'Family', true, 1), new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('another year', '2021-07-20', 'Work', false, 2)];
+          this.actions = []; // actions: Action [] = [
+          //   new Action('today2', '2020-08-19', 'Free', false, 2),
+          //   new Action('today1', '2020-08-19', 'Free', true, 0),
+          //   new Action('another year', '2021-07-20', 'Work', false, 0),
+          //   new Action('week2', '2020-08-20', 'Family', true, 0),
+          //   new Action('week1', '2020-08-22', 'Family', false, 2),
+          //   new Action('another year', '2021-07-20', 'Work', false, 1),
+          //   new Action('today3', '2020-08-19', 'Free', false, 1),
+          //   new Action('week3', '2020-08-23', 'Family', true, 1),
+          //   new Action('another year', '2021-07-20', 'Work', false, 2),
+          // ];
+
           this.currentActions = this.copyActions();
           this.catagories = ['None', 'Work', 'Free', 'Family'];
           this.selectedView = 'week';
@@ -360,14 +370,23 @@
             return num;
           } //////////////////////////////////////// ** STUFF TO DO WITH THE ACTIONS ARRAY ** /////////////////////////////////////////////////
           // LOCAL STORAGE
-          // storeActions() {
-          //   this.storageService.storeData(this.actions);
-          // }
-          // LOCAL STORAGE
-          // fetchActions() {
-          //   this.storageService.retriveData().then((data: Action []) => {this.actions = data; console.log('actions fetched', data); });
-          // }
-          // returns the master Actions Variable
+
+        }, {
+          key: "storeActions",
+          value: function storeActions() {
+            this.storageService.storeData(this.actions);
+          } // LOCAL STORAGE
+
+        }, {
+          key: "fetchActions",
+          value: function fetchActions() {
+            var _this = this;
+
+            this.storageService.retriveData().then(function (data) {
+              _this.actions = data;
+              console.log('actions fetched', data);
+            });
+          } // returns the master Actions Variable
 
         }, {
           key: "getActions",
@@ -381,17 +400,23 @@
             var adding = new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"](name, deadline, catagory, completed, this.getCatPos(catagory));
             this.actions.splice(0, 0, adding);
             this.updateCurrent(); // LOCAL STORAGE
-            // this.storeActions();
+
+            this.storeActions();
           } // Removes the action that is passed into the array
 
         }, {
           key: "deleteAction",
           value: function deleteAction(action) {
+            var _this2 = this;
+
             var index = this.actions.findIndex(function (x) {
-              return x === action;
+              return _this2.checkActEq(x, action);
             });
+            console.log('removing', index);
+            console.log('actions', this.actions);
             this.actions.splice(index, 1); // LOCAL STORAGE
-            // this.storeActions();
+
+            this.storeActions();
           } // moves an actions from a posstion to another possiton
 
         }, {
@@ -400,15 +425,14 @@
             var action = this.actions[from];
             this.actions.splice(from, 1);
             this.actions.splice(to, 0, action); // LOCAL STORAGE
-            // this.storeActions();
 
-            console.log(this.actions);
+            this.storeActions();
           } // checks if two arrays are equal in values
 
         }, {
           key: "checkActEq",
           value: function checkActEq(a, b) {
-            if (a.name === b.name && a.deadline === b.deadline && a.catagory === b.catagory && a.completed === b.completed) {
+            if (a.name === b.name && a.deadline === b.deadline && a.catagory === b.catagory && a.completed === b.completed && a.catPos === b.catPos) {
               return true;
             } else {
               return false;
@@ -418,14 +442,15 @@
         }, {
           key: "updateAction",
           value: function updateAction(old, neww) {
-            var _this = this;
+            var _this3 = this;
 
             var index = this.actions.findIndex(function (x) {
-              return _this.checkActEq(x, old);
+              return _this3.checkActEq(x, old);
             });
             this.actions.splice(index, 1, neww);
             this.updateCurrent(); // LOCAL STORAGE
-            // this.storeActions();
+
+            this.storeActions();
           } //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           // functions to do with the current selected view
           // these are the getters and setters for the selected view variable used by the popover
@@ -464,10 +489,10 @@
         }, {
           key: "setDayView",
           value: function setDayView() {
-            var _this2 = this;
+            var _this4 = this;
 
             var results = this.actions.filter(function (x) {
-              return x.deadline === _this2.timeService.getDate();
+              return x.deadline === _this4.timeService.getDate();
             });
             this.currentActions = results;
           } // this function sets the currentActions array to the just the days of the current week
@@ -615,7 +640,7 @@
         }, {
           key: "srtByCata",
           value: function srtByCata() {
-            var _this3 = this;
+            var _this5 = this;
 
             var newAry = [null]; // This section splits the catagories into seperate arrays
 
@@ -626,7 +651,7 @@
               var _loop = function _loop() {
                 var i = _step7.value;
 
-                var filtered = _this3.currentActions.filter(function (x) {
+                var filtered = _this5.currentActions.filter(function (x) {
                   return x.catagory === i;
                 });
 
@@ -679,6 +704,7 @@
             }
 
             this.currentActions = replacingAry;
+            return newAry;
           }
         }]);
 
@@ -1242,15 +1268,16 @@
         _createClass(AppComponent, [{
           key: "initializeApp",
           value: function initializeApp() {
-            var _this4 = this;
+            var _this6 = this;
 
             this.platform.ready().then(function () {
-              _this4.statusBar.styleDefault();
+              _this6.statusBar.styleDefault();
 
-              _this4.splashScreen.hide();
+              _this6.splashScreen.hide();
             });
-            this.platform.ready().then(function () {// LOCAL STORAGE
-              // this.actionsService.fetchActions();
+            this.platform.ready().then(function () {
+              // LOCAL STORAGE
+              _this6.actionsService.fetchActions();
             });
           }
         }]);

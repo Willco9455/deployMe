@@ -588,6 +588,7 @@ let AddActionPage = class AddActionPage {
     updateTool(inf) {
         this.selected = inf.detail.value;
     }
+    // triggered when saving a new action
     addAct() {
         if (this.deadline !== undefined) {
             this.deadline = this.deadConv(this.deadline);
@@ -598,15 +599,18 @@ let AddActionPage = class AddActionPage {
         this.actionsService.addAction(this.name, this.deadline, this.catagory, false);
         this.modal.dismiss();
     }
+    // converts deadline
     deadConv(ion) {
         ion = ion.split('T')[0];
         console.log(ion);
         return ion;
     }
+    // triggered when decided to edit the action when in edditing mode
     update() {
-        this.actionsService.updateAction(this.itemEditing, new _to_do_item_model__WEBPACK_IMPORTED_MODULE_4__["Action"](this.name, this.deadConv(this.deadline), this.catagory, this.itemEditing.completed, this.actionsService.getCatPos(this.catagory)));
+        this.actionsService.updateAction(this.itemEditing, new _to_do_item_model__WEBPACK_IMPORTED_MODULE_4__["Action"](this.name, this.deadConv(this.deadline), this.catagory, this.itemEditing.completed, this.itemEditing.catPos));
         this.modal.dismiss();
     }
+    // triggered when adding a new action
     validate() {
         if (this.name.length !== 0 && this.deadline !== undefined) {
             this.butonDis = false;

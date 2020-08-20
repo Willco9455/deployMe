@@ -498,18 +498,18 @@ let ActionsService = class ActionsService {
         this.timeService = timeService;
         this.storageService = storageService;
         // LOCAL STORAGE
-        // actions: Action [] = [];
-        this.actions = [
-            new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('today2', '2020-08-19', 'Free', false, 2),
-            new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('today1', '2020-08-19', 'Free', true, 0),
-            new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('another year', '2021-07-20', 'Work', false, 0),
-            new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('week2', '2020-08-20', 'Family', true, 0),
-            new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('week1', '2020-08-22', 'Family', false, 2),
-            new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('another year', '2021-07-20', 'Work', false, 1),
-            new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('today3', '2020-08-19', 'Free', false, 1),
-            new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('week3', '2020-08-23', 'Family', true, 1),
-            new _Pages_to_do_item_model__WEBPACK_IMPORTED_MODULE_2__["Action"]('another year', '2021-07-20', 'Work', false, 2),
-        ];
+        this.actions = [];
+        // actions: Action [] = [
+        //   new Action('today2', '2020-08-19', 'Free', false, 2),
+        //   new Action('today1', '2020-08-19', 'Free', true, 0),
+        //   new Action('another year', '2021-07-20', 'Work', false, 0),
+        //   new Action('week2', '2020-08-20', 'Family', true, 0),
+        //   new Action('week1', '2020-08-22', 'Family', false, 2),
+        //   new Action('another year', '2021-07-20', 'Work', false, 1),
+        //   new Action('today3', '2020-08-19', 'Free', false, 1),
+        //   new Action('week3', '2020-08-23', 'Family', true, 1),
+        //   new Action('another year', '2021-07-20', 'Work', false, 2),
+        // ];
         this.currentActions = this.copyActions();
         this.catagories = ['None', 'Work', 'Free', 'Family'];
         this.selectedView = 'week';
@@ -548,13 +548,13 @@ let ActionsService = class ActionsService {
     }
     //////////////////////////////////////// ** STUFF TO DO WITH THE ACTIONS ARRAY ** /////////////////////////////////////////////////
     // LOCAL STORAGE
-    // storeActions() {
-    //   this.storageService.storeData(this.actions);
-    // }
+    storeActions() {
+        this.storageService.storeData(this.actions);
+    }
     // LOCAL STORAGE
-    // fetchActions() {
-    //   this.storageService.retriveData().then((data: Action []) => {this.actions = data; console.log('actions fetched', data); });
-    // }
+    fetchActions() {
+        this.storageService.retriveData().then((data) => { this.actions = data; console.log('actions fetched', data); });
+    }
     // returns the master Actions Variable
     getActions() {
         return [...this.currentActions];
@@ -565,14 +565,16 @@ let ActionsService = class ActionsService {
         this.actions.splice(0, 0, adding);
         this.updateCurrent();
         // LOCAL STORAGE
-        // this.storeActions();
+        this.storeActions();
     }
     // Removes the action that is passed into the array
     deleteAction(action) {
-        const index = this.actions.findIndex(x => x === action);
+        const index = this.actions.findIndex(x => this.checkActEq(x, action));
+        console.log('removing', index);
+        console.log('actions', this.actions);
         this.actions.splice(index, 1);
         // LOCAL STORAGE
-        // this.storeActions();
+        this.storeActions();
     }
     // moves an actions from a posstion to another possiton
     moveAction(from, to) {
@@ -580,15 +582,15 @@ let ActionsService = class ActionsService {
         this.actions.splice(from, 1);
         this.actions.splice(to, 0, action);
         // LOCAL STORAGE
-        // this.storeActions();
-        console.log(this.actions);
+        this.storeActions();
     }
     // checks if two arrays are equal in values
     checkActEq(a, b) {
         if (a.name === b.name &&
             a.deadline === b.deadline &&
             a.catagory === b.catagory &&
-            a.completed === b.completed) {
+            a.completed === b.completed &&
+            a.catPos === b.catPos) {
             return true;
         }
         else {
@@ -601,7 +603,7 @@ let ActionsService = class ActionsService {
         this.actions.splice(index, 1, neww);
         this.updateCurrent();
         // LOCAL STORAGE
-        // this.storeActions();
+        this.storeActions();
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // functions to do with the current selected view
@@ -750,6 +752,7 @@ let ActionsService = class ActionsService {
             }
         }
         this.currentActions = replacingAry;
+        return (newAry);
     }
 };
 ActionsService.ctorParameters = () => [
@@ -1096,7 +1099,7 @@ let AppComponent = class AppComponent {
         });
         this.platform.ready().then(() => {
             // LOCAL STORAGE
-            // this.actionsService.fetchActions();
+            this.actionsService.fetchActions();
         });
     }
 };
