@@ -22,7 +22,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar color='primary'>\n    <ion-title>Actions</ion-title>\n    <ion-buttons *ngIf=\"this.srtBy === 'custom'\" slot=\"end\">\n      <ion-button (click)='editAct()'>Move items</ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-toolbar mode='ios'>\n    <ion-segment (ionChange)='dayRefresh()' style=\"width: 90%;\" [(ngModel)]='selected' value=\"day\">\n\n      <ion-segment-button value=\"day\" layout=\"icon-start\">\n        <ion-icon name=\"today-outline\"></ion-icon>\n        <ion-label>Day</ion-label> \n      </ion-segment-button>\n\n      <ion-segment-button value=\"week\" layout='icon-start'>\n        <ion-icon name=\"calendar-outline\"></ion-icon>\n        <ion-label>Week</ion-label>\n      </ion-segment-button>\n      \n      <ion-segment-button value=\"all\" layout='icon-start'>\n        <ion-icon name=\"list-outline\"></ion-icon>\n        <ion-label>All</ion-label>\n      </ion-segment-button>\n      \n    </ion-segment>\n\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"presentPopover($event)\">\n        <!--<ion-label>Sort</ion-label>-->\n        <ion-icon background='primary' size='medium' name=\"swap-vertical-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n\n<!-- THIS PART IS SHOWN WHEN NOT SORTING BY CATAGORY -->\n  <ion-reorder-group *ngIf=\"this.srtBy !== 'catagory'; else mainElse\" (ionItemReorder)='doReorder($event)' [disabled]='!edit'>\n    <div *ngFor=\"let action of actions\">\n      <!-- this section is if the the user has selected to edit the order of there actions-->\n      <ion-reorder *ngIf=\"edit === true; else elseBlock\">\n        <ion-item>\n          <ion-label>\n            <h6>{{action.name}}</h6>\n            <p>Catagory - {{action.catagory}}</p>\n            <p>Deadline - {{this.dateToDisplay(action.deadline)}}</p>\n          </ion-label>\n          <ion-icon name=\"reorder-three-outline\"></ion-icon>\n        </ion-item>\n      </ion-reorder>\n\n      <ng-template #elseBlock>\n        <ion-item-sliding>\n          <ion-item lines='full' class=\"action\">\n            <ion-label>\n              <h6>{{action.name}}</h6>\n              <p>Catagory - {{action.catagory}}</p>\n              <p>Deadline - {{this.dateToDisplay(action.deadline)}}</p>\n            </ion-label>\n  \n            <ion-checkbox slot=\"end\" [(ngModel)]=\"action.completed\"></ion-checkbox>\n          </ion-item>\n  \n          <ion-item-options>\n            <ion-item-option (click)='showModal(action)' color=\"secondary\">\n              <ion-icon slot=\"icon-only\" name=\"create-outline\"></ion-icon>\n            </ion-item-option>\n\n            <ion-item-option (click)='deleteAction(action)' color=\"danger\">\n              <ion-icon slot=\"icon-only\" name=\"trash\"></ion-icon>\n            </ion-item-option>\n          </ion-item-options>\n        </ion-item-sliding>\n      </ng-template>\n\n    </div>\n  </ion-reorder-group>\n\n<!-- THIS PART IS SHOWN WHEN YOU ARE SORTING BY CATAGORY -->\n  <ng-template #mainElse>\n    <div *ngFor=\"let cat of this.catagories\">\n\n\n      <ion-list *ngIf=\"checkCatFull(cat)\">\n        \n        <ion-list-header>\n          <ion-label>{{ cat }}</ion-label>\n          <ion-button (click)=\"reorderCatFun(cat)\" >Order</ion-button>\n        </ion-list-header>\n\n          \n        <ion-reorder-group (ionItemReorder)='moveCatPos(cat, $event)' [disabled]='!checkRe(cat)'>\n          <div *ngFor=\"let action of getCatActions(cat)\">\n\n            <ion-reorder *ngIf=\"checkRe(cat); else notReorder\">\n              <ion-item >\n                <ion-label>\n                  <h6>{{action.name}}</h6>\n                  <p>Deadline - {{this.dateToDisplay(action.deadline)}}</p>\n                </ion-label>\n                <ion-icon name=\"reorder-three-outline\"></ion-icon>\n              </ion-item>\n            </ion-reorder>\n            \n            \n            <ng-template #notReorder>\n              <ion-item-sliding *ngIf=\"action.catagory === cat\">\n                <ion-item lines='full' class=\"action\">\n                  <ion-label>\n                    <h6>{{action.name}}</h6>\n                    <p>Deadline - {{this.dateToDisplay(action.deadline)}}</p>\n                  </ion-label>\n                  \n                  <ion-checkbox slot=\"end\" [(ngModel)]=\"action.completed\"></ion-checkbox>\n                </ion-item>\n                \n                <ion-item-options>\n                  <ion-item-option (click)='showModal(action)' color=\"secondary\">\n                    <ion-icon slot=\"icon-only\" name=\"create-outline\"></ion-icon>\n                  </ion-item-option>\n                  \n                  <ion-item-option (click)='deleteAction(action)' color=\"danger\">\n                    <ion-icon slot=\"icon-only\" name=\"trash\"></ion-icon>\n                  </ion-item-option>\n                </ion-item-options>\n                \n              </ion-item-sliding>\n            </ng-template>\n          \n          </div>\n        </ion-reorder-group>\n      </ion-list>\n\n    </div>\n  </ng-template>\n\n    \n  <!--This creates a square so that the button does not cover important infomation-->\n  <div style=\"height: 80px\"></div>\n  <!--Button to add a new action-->\n  <ion-fab (click)='showModal(\"new\")' vertical=\"bottom\" horizontal=\"end\" slot=\"fixed\">\n    <ion-fab-button>\n      <ion-icon name=\"add\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n\n\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar color='primary'>\n    <ion-title>Actions</ion-title>\n    <ion-buttons *ngIf=\"this.srtBy === 'custom'\" slot=\"end\">\n      <ion-button (click)='editAct()'>Move items</ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-toolbar mode='ios'>\n    <ion-segment (ionChange)='dayRefresh()' style=\"width: 90%;\" [(ngModel)]='selected' value=\"day\">\n\n      <ion-segment-button value=\"day\" layout=\"icon-start\">\n        <ion-icon name=\"today-outline\"></ion-icon>\n        <ion-label>Day</ion-label> \n      </ion-segment-button>\n\n      <ion-segment-button value=\"week\" layout='icon-start'>\n        <ion-icon name=\"calendar-outline\"></ion-icon>\n        <ion-label>Week</ion-label>\n      </ion-segment-button>\n      \n      <ion-segment-button value=\"all\" layout='icon-start'>\n        <ion-icon name=\"list-outline\"></ion-icon>\n        <ion-label>All</ion-label>\n      </ion-segment-button>\n      \n    </ion-segment>\n\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"presentPopover($event)\">\n        <!--<ion-label>Sort</ion-label>-->\n        <ion-icon background='primary' size='medium' name=\"swap-vertical-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n\n<!-- THIS PART IS SHOWN WHEN NOT SORTING BY CATAGORY -->\n  <ion-reorder-group *ngIf=\"this.srtBy !== 'catagory'; else mainElse\" (ionItemReorder)='doReorder($event)' [disabled]='!edit'>\n    <div *ngFor=\"let action of actions\">\n\n      <!--This part runs when ordering by date and it puts a header for each new date-->\n      <div class=\"dateHeader\" *ngIf=\"this.srtBy === 'date' && checkFirstDate(action)\">\n        <span>{{this.dateToDisplay(action.deadline)}}</span>\n      </div>\n\n      <!-- this section is if the the user has selected to edit the order of there actions-->\n      <ion-reorder *ngIf=\"edit === true; else elseBlock\">\n        <ion-item>\n          <ion-label>\n            <h6>{{action.name}}</h6>\n            <p>Catagory - {{action.catagory}}</p>\n            <p>Deadline - {{this.dateToDisplay(action.deadline)}}</p>\n          </ion-label>\n          <ion-icon name=\"reorder-three-outline\"></ion-icon>\n        </ion-item>\n      </ion-reorder>\n\n      <ng-template #elseBlock>\n        <ion-item-sliding>\n          <ion-item lines='full' class=\"action\">\n            <ion-label>\n              <h6>{{action.name}}</h6>\n              <p>Catagory - {{action.catagory}}</p>\n              <p>Deadline - {{this.dateToDisplay(action.deadline)}}</p>\n            </ion-label>\n  \n            <ion-checkbox slot=\"end\" [checked]='action.completed' (ionChange)='checked(action)'></ion-checkbox>\n          </ion-item>\n  \n          <ion-item-options>\n            <ion-item-option (click)='showModal(action)' color=\"secondary\">\n              <ion-icon slot=\"icon-only\" name=\"create-outline\"></ion-icon>\n            </ion-item-option>\n\n            <ion-item-option (click)='deleteAction(action)' color=\"danger\">\n              <ion-icon slot=\"icon-only\" name=\"trash\"></ion-icon>\n            </ion-item-option>\n          </ion-item-options>\n        </ion-item-sliding>\n      </ng-template>\n\n    </div>\n  </ion-reorder-group>\n\n<!-- THIS PART IS SHOWN WHEN YOU ARE SORTING BY CATAGORY -->\n  <ng-template #mainElse>\n    <div *ngFor=\"let cat of this.catagories\">\n\n\n      <ion-list *ngIf=\"checkCatFull(cat)\">\n        \n        <ion-list-header>\n          <ion-label>{{ cat }}</ion-label>\n          <ion-button (click)=\"reorderCatFun(cat)\" >Order</ion-button>\n        </ion-list-header>\n\n          \n        <ion-reorder-group (ionItemReorder)='moveCatPos(cat, $event)' [disabled]='!checkRe(cat)'>\n          <div *ngFor=\"let action of getCatActions(cat)\">\n\n            <ion-reorder *ngIf=\"checkRe(cat); else notReorder\">\n              <ion-item >\n                <ion-label>\n                  <h6>{{action.name}}</h6>\n                  <p>Deadline - {{this.dateToDisplay(action.deadline)}}</p>\n                </ion-label>\n                <ion-icon name=\"reorder-three-outline\"></ion-icon>\n              </ion-item>\n            </ion-reorder>\n            \n            \n            <ng-template #notReorder>\n              <ion-item-sliding *ngIf=\"action.catagory === cat\">\n                <ion-item lines='full' class=\"action\">\n                  <ion-label>\n                    <h6>{{action.name}}</h6>\n                    <p>Deadline - {{this.dateToDisplay(action.deadline)}}</p>\n                  </ion-label>\n                  \n                  <ion-checkbox slot=\"end\" (ionChange)='checked(action)' [checked]=\"action.completed\"></ion-checkbox>\n                </ion-item>\n                \n                <ion-item-options>\n                  <ion-item-option (click)='showModal(action)' color=\"secondary\">\n                    <ion-icon slot=\"icon-only\" name=\"create-outline\"></ion-icon>\n                  </ion-item-option>\n                  \n                  <ion-item-option (click)='deleteAction(action)' color=\"danger\">\n                    <ion-icon slot=\"icon-only\" name=\"trash\"></ion-icon>\n                  </ion-item-option>\n                </ion-item-options>\n                \n              </ion-item-sliding>\n            </ng-template>\n          \n          </div>\n        </ion-reorder-group>\n      </ion-list>\n\n    </div>\n  </ng-template>\n\n    \n  <!--This creates a square so that the button does not cover important infomation-->\n  <div style=\"height: 80px\"></div>\n  <!--Button to add a new action-->\n  <ion-fab (click)='showModal(\"new\")' vertical=\"bottom\" horizontal=\"end\" slot=\"fixed\">\n    <ion-fab-button>\n      <ion-icon name=\"add\"></ion-icon>\n    </ion-fab-button>\n  </ion-fab>\n\n\n</ion-content>";
       /***/
     },
 
@@ -187,7 +187,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = ".addButton {\n  bottom: 0;\n  right: 0;\n  position: fixed;\n  z-index: 10;\n  margin: 0px 10px 10px 10px;\n  --border-radius: 500px;\n  --padding-end: 0px;\n  --padding-start: 0px;\n  height: 50px;\n  width: 60px;\n}\n.addButton ion-icon {\n  font-size: larger;\n}\nion-list-header {\n  text-transform: capitalize;\n  font-weight: bolder;\n  font-size: larger;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvUGFnZXMvdG8tZG8vYWN0aW9ucy9hY3Rpb25zLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFFQTtFQUNJLFNBQUE7RUFDQSxRQUFBO0VBQ0EsZUFBQTtFQUNBLFdBQUE7RUFDQSwwQkFBQTtFQUNBLHNCQUFBO0VBQ0Esa0JBQUE7RUFDQSxvQkFBQTtFQUNBLFlBQUE7RUFDQSxXQUFBO0FBREo7QUFFSTtFQUNJLGlCQUFBO0FBQVI7QUFJQTtFQUNJLDBCQUFBO0VBQ0EsbUJBQUE7RUFDQSxpQkFBQTtBQURKIiwiZmlsZSI6InNyYy9hcHAvUGFnZXMvdG8tZG8vYWN0aW9ucy9hY3Rpb25zLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuXG4uYWRkQnV0dG9ue1xuICAgIGJvdHRvbTogMDtcbiAgICByaWdodDogMDtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgei1pbmRleDogMTA7XG4gICAgbWFyZ2luOiAwcHggMTBweCAxMHB4IDEwcHg7XG4gICAgLS1ib3JkZXItcmFkaXVzOiA1MDBweDtcbiAgICAtLXBhZGRpbmctZW5kOiAwcHg7XG4gICAgLS1wYWRkaW5nLXN0YXJ0OiAwcHg7XG4gICAgaGVpZ2h0OiA1MHB4O1xuICAgIHdpZHRoOiA2MHB4O1xuICAgIGlvbi1pY29uIHtcbiAgICAgICAgZm9udC1zaXplOiBsYXJnZXI7XG4gICAgfSBcbn1cblxuaW9uLWxpc3QtaGVhZGVye1xuICAgIHRleHQtdHJhbnNmb3JtOmNhcGl0YWxpemU7XG4gICAgZm9udC13ZWlnaHQ6IGJvbGRlcjtcbiAgICBmb250LXNpemU6IGxhcmdlcjtcbn1cblxuIl19 */";
+      __webpack_exports__["default"] = ".addButton {\n  bottom: 0;\n  right: 0;\n  position: fixed;\n  z-index: 10;\n  margin: 0px 10px 10px 10px;\n  --border-radius: 500px;\n  --padding-end: 0px;\n  --padding-start: 0px;\n  height: 50px;\n  width: 60px;\n}\n.addButton ion-icon {\n  font-size: larger;\n}\nion-list-header {\n  text-transform: capitalize;\n  font-weight: bolder;\n  font-size: larger;\n}\n.dateHeader {\n  width: 110%;\n  height: auto;\n  color: black;\n  background-color: #E8E8E8;\n  padding: 6px 6px 6px 15px;\n}\n.dateHeader span {\n  font-weight: bold;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvUGFnZXMvdG8tZG8vYWN0aW9ucy9hY3Rpb25zLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFFQTtFQUNJLFNBQUE7RUFDQSxRQUFBO0VBQ0EsZUFBQTtFQUNBLFdBQUE7RUFDQSwwQkFBQTtFQUNBLHNCQUFBO0VBQ0Esa0JBQUE7RUFDQSxvQkFBQTtFQUNBLFlBQUE7RUFDQSxXQUFBO0FBREo7QUFFSTtFQUNJLGlCQUFBO0FBQVI7QUFJQTtFQUNJLDBCQUFBO0VBQ0EsbUJBQUE7RUFDQSxpQkFBQTtBQURKO0FBSUE7RUFDSSxXQUFBO0VBQ0EsWUFBQTtFQUNBLFlBQUE7RUFDQSx5QkFBQTtFQUNBLHlCQUFBO0FBREo7QUFFSTtFQUNJLGlCQUFBO0FBQVIiLCJmaWxlIjoic3JjL2FwcC9QYWdlcy90by1kby9hY3Rpb25zL2FjdGlvbnMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG5cbi5hZGRCdXR0b257XG4gICAgYm90dG9tOiAwO1xuICAgIHJpZ2h0OiAwO1xuICAgIHBvc2l0aW9uOiBmaXhlZDtcbiAgICB6LWluZGV4OiAxMDtcbiAgICBtYXJnaW46IDBweCAxMHB4IDEwcHggMTBweDtcbiAgICAtLWJvcmRlci1yYWRpdXM6IDUwMHB4O1xuICAgIC0tcGFkZGluZy1lbmQ6IDBweDtcbiAgICAtLXBhZGRpbmctc3RhcnQ6IDBweDtcbiAgICBoZWlnaHQ6IDUwcHg7XG4gICAgd2lkdGg6IDYwcHg7XG4gICAgaW9uLWljb24ge1xuICAgICAgICBmb250LXNpemU6IGxhcmdlcjtcbiAgICB9IFxufVxuXG5pb24tbGlzdC1oZWFkZXJ7XG4gICAgdGV4dC10cmFuc2Zvcm06Y2FwaXRhbGl6ZTtcbiAgICBmb250LXdlaWdodDogYm9sZGVyO1xuICAgIGZvbnQtc2l6ZTogbGFyZ2VyO1xufVxuXG4uZGF0ZUhlYWRlcntcbiAgICB3aWR0aDogMTEwJTtcbiAgICBoZWlnaHQ6IGF1dG87XG4gICAgY29sb3I6IGJsYWNrO1xuICAgIGJhY2tncm91bmQtY29sb3I6ICNFOEU4RTg7XG4gICAgcGFkZGluZzogNnB4IDZweCA2cHggMTVweDtcbiAgICBzcGFue1xuICAgICAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICB9XG59XG5cbiJdfQ== */";
       /***/
     },
 
@@ -225,31 +225,37 @@
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var _item_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ../item.model */
+      "./src/app/Pages/to-do/item.model.ts");
+      /* harmony import */
+
+
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @ionic/angular */
       "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
       /* harmony import */
 
 
-      var _add_action_add_action_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var _add_action_add_action_page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! ../../add-action/add-action.page */
       "./src/app/Pages/add-action/add-action.page.ts");
       /* harmony import */
 
 
-      var src_app_Services_actions_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var src_app_Services_actions_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! src/app/Services/actions.service */
       "./src/app/Services/actions.service.ts");
       /* harmony import */
 
 
-      var _pop_over_pop_over_page__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _pop_over_pop_over_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! ../../pop-over/pop-over.page */
       "./src/app/Pages/pop-over/pop-over.page.ts");
       /* harmony import */
 
 
-      var src_app_Services_time_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var src_app_Services_time_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! src/app/Services/time.service */
       "./src/app/Services/time.service.ts");
 
@@ -293,6 +299,8 @@
             if (this.srtBy === 'catagory') {
               this.catagorySplit = this.actionsService.srtByCata();
             }
+
+            console.log('dayrefresh ran');
           } // the code to pop up the add modal when the add button is pressed
 
         }, {
@@ -327,7 +335,7 @@
 
                       _context.next = 3;
                       return this.modalCtrl.create({
-                        component: _add_action_add_action_page__WEBPACK_IMPORTED_MODULE_3__["AddActionPage"],
+                        component: _add_action_add_action_page__WEBPACK_IMPORTED_MODULE_4__["AddActionPage"],
                         cssClass: 'add-modal-class',
                         swipeToClose: true,
                         backdropDismiss: true,
@@ -367,7 +375,7 @@
                     case 0:
                       _context2.next = 2;
                       return this.popoverController.create({
-                        component: _pop_over_pop_over_page__WEBPACK_IMPORTED_MODULE_5__["PopOverPage"],
+                        component: _pop_over_pop_over_page__WEBPACK_IMPORTED_MODULE_6__["PopOverPage"],
                         cssClass: 'my-custom-class',
                         event: ev,
                         translucent: true
@@ -476,6 +484,38 @@
           value: function dateToDisplay(date) {
             return this.timeService.dateToDisplay(date);
           }
+        }, {
+          key: "checkFirstDate",
+          value: function checkFirstDate(action) {
+            var _this3 = this;
+
+            var pos = this.actions.findIndex(function (x) {
+              return _this3.actionsService.checkActEq(x, action);
+            });
+
+            if (pos === 0) {
+              return true;
+            }
+
+            if (action.deadline === this.actions[pos - 1].deadline) {
+              return false;
+            } else {
+              return true;
+            }
+          } // triggered when user checks an action off
+
+        }, {
+          key: "checked",
+          value: function checked(action) {
+            var _this4 = this;
+
+            // updates the old action only changes the completed
+            console.log('action edditing', action);
+            this.actionsService.updateAction(action, new _item_model__WEBPACK_IMPORTED_MODULE_2__["Action"](action.name, action.deadline, action.catagory, !action.completed, action.catPos));
+            var sleep = window.setTimeout(function () {
+              return _this4.dayRefresh();
+            }, 500);
+          }
         }]);
 
         return ActionsPage;
@@ -483,13 +523,13 @@
 
       ActionsPage.ctorParameters = function () {
         return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"]
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ModalController"]
         }, {
-          type: src_app_Services_actions_service__WEBPACK_IMPORTED_MODULE_4__["ActionsService"]
+          type: src_app_Services_actions_service__WEBPACK_IMPORTED_MODULE_5__["ActionsService"]
         }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["PopoverController"]
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["PopoverController"]
         }, {
-          type: src_app_Services_time_service__WEBPACK_IMPORTED_MODULE_6__["TimeService"]
+          type: src_app_Services_time_service__WEBPACK_IMPORTED_MODULE_7__["TimeService"]
         }];
       };
 
@@ -501,7 +541,7 @@
         styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
         /*! ./actions.page.scss */
         "./src/app/Pages/to-do/actions/actions.page.scss"))["default"]]
-      }), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"], src_app_Services_actions_service__WEBPACK_IMPORTED_MODULE_4__["ActionsService"], _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["PopoverController"], src_app_Services_time_service__WEBPACK_IMPORTED_MODULE_6__["TimeService"]])], ActionsPage);
+      }), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_3__["ModalController"], src_app_Services_actions_service__WEBPACK_IMPORTED_MODULE_5__["ActionsService"], _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["PopoverController"], src_app_Services_time_service__WEBPACK_IMPORTED_MODULE_7__["TimeService"]])], ActionsPage);
       /***/
     }
   }]);
